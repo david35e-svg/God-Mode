@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper: check if request is authenticated (supports anonymous & registered)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper: check if caller is an authorized administrator / site owner
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.admin == true ||
+        request.auth.token.email == 'david35e@gmail.com'
+      );
+    }
+
+    // User profile: users can read profiles and write their own document
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Inquiries: authenticated users can create inquiries and view their own, admins can inspect all
+    match /inquiries/{inquiryId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.userId ||
+        isAdmin()
+      );
+      allow update, delete: if isAdmin();
+    }
+
+    // Affiliate Providers: read-only for public/gamers, admin-only write
+    match /affiliate_providers/{providerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Affiliate Links & Offers: read-only for client UI, admin-only write
+    match /affiliate_links/{linkId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /affiliate_offers/{offerId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Affiliate Click Tracking:
+    // - Authenticated / anonymous gamers can create their click logs
+    // - Gamers can only inspect their own click events; admins can view all for telemetry
+    // - Historical click events are strictly IMMUTABLE: no updates or deletes permitted
+    match /affiliate_clicks/{clickId} {
+      allow create: if isAuthenticated();
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.uid ||
+        isAdmin()
+      );
+      allow update, delete: if false;
+    }
+
+    // Affiliate Conversions:
+    // - Created exclusively via server / Cloud Function postback webhooks (service account or admin)
+    // - Users can read their own verified conversions for gamer rewards
+    match /affiliate_conversions/{conversionId} {
+      allow create, update, delete: if isAdmin();
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.uid ||
+        isAdmin()
+      );
+    }
+
+    // User Saved Trips:
+    // - Gamers can create and manage their own travel plans
+    // - Admins can inspect itineraries for concierge support
+    match /trips/{tripId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.uid ||
+        isAdmin()
+      );
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAuthenticated() && (
+        resource.data.uid == request.auth.uid ||
+        isAdmin()
+      );
+    }
+
+    // Event Crews (Who is flying):
+    // - Publicly visible so gamers can connect and form squads
+    // - Gamers manage their own registration
+    match /event_crews/{crewId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAuthenticated() && (
+        resource.data.uid == request.auth.uid ||
+        isAdmin()
+      );
+    }
+
+    // Community Posts & Live Coordination Forum:
+    // - Public read for travel knowledge sharing
+    // - Authenticated gamers can post and interact
+    match /community_posts/{postId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if isAuthenticated() && (
+        resource.data.authorUid == request.auth.uid ||
+        isAdmin()
+      );
+    }
+  }
+}
