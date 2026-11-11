@@ -13,7 +13,7 @@ export default function Page() {
       <section className="shop-hero">
         <div className="wrap">
           <h1 className="title-xl">חנות<br />הקלפים.</h1>
-          <p className="arena-sub">קלפי פוקימון וכל מה שצריך כדי לשמור עליהם. אנחנו לא מוכרים בעצמנו: כל מדף מוביל לחנות של שותף, והקנייה, המשלוח וההחזרות מתבצעים אצלו.</p>
+          <p className="lead">קלפי פוקימון וכל מה שצריך כדי לשמור עליהם. אנחנו לא מוכרים בעצמנו: כל מדף מוביל לחנות של שותף, והקנייה, המשלוח וההחזרות מתבצעים אצלו.</p>
         </div>
       </section>
       <div className="wrap section">

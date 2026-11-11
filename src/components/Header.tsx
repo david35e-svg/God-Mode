@@ -6,7 +6,7 @@ import { Menu, X } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
-  ["/shop", "חנות קלפים"], ["/events", "אירועים"], ["/destinations", "עולמות"], ["/parks", "פארקים"],
+  ["/spots", "מקומות נסתרים"], ["/shop", "חנות קלפים"], ["/events", "אירועים"], ["/destinations", "יעדים"],
   ["/guides", "מדריכים"], ["/planner", "בונה טיול"], ["/community", "קהילה"],
 ] as const;
 

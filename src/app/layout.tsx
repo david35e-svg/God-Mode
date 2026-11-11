@@ -17,23 +17,27 @@ const body = localFont({
 const display = localFont({
   variable: "--font-display", display: "swap",
   src: [
-    { path: "./fonts/rubik-hebrew-900-normal.woff2", weight: "900" },
-    { path: "./fonts/rubik-latin-900-normal.woff2", weight: "900" },
-    { path: "./fonts/rubik-hebrew-700-normal.woff2", weight: "700" },
-    { path: "./fonts/rubik-latin-700-normal.woff2", weight: "700" },
+    { path: "./fonts/heebo-hebrew-900-normal.woff2", weight: "900" },
+    { path: "./fonts/heebo-latin-900-normal.woff2", weight: "900" },
+    { path: "./fonts/heebo-hebrew-700-normal.woff2", weight: "700" },
+    { path: "./fonts/heebo-latin-700-normal.woff2", weight: "700" },
   ],
+});
+const mono = localFont({
+  variable: "--font-mono", display: "swap", preload: false,
+  src: "./fonts/ibm-plex-mono-latin-500-normal.woff2",
 });
 
 export const metadata: Metadata = {
   title: { default: "God Mode Traveler", template: "%s | God Mode Traveler" },
-  description: "קלפי פוקימון, טורנירים ונסיעות גיימינג, בעברית.",
+  description: "מקומות גיימינג נסתרים בעולם, חנות קלפים וטורנירים. בעברית.",
   robots: { index: false, follow: false },
 };
-export const viewport: Viewport = { themeColor: "#0E0726" };
+export const viewport: Viewport = { themeColor: "#060911" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="he" dir="rtl" className={`${body.variable} ${display.variable}`}>
+    <html lang="he" dir="rtl" className={`${body.variable} ${display.variable} ${mono.variable}`}>
       <body>
         <a className="skip" href="#main">דילוג לתוכן</a>
         <AuthProvider>

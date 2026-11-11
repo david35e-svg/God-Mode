@@ -6,7 +6,7 @@ import { geoContains } from "d3-geo";
 const topo = JSON.parse(readFileSync("node_modules/world-atlas/land-110m.json", "utf8"));
 const land = feature(topo, topo.objects.land);
 const B = { west: -130, east: 155, north: 72, south: -12 };
-const STEP = 1.5;
+const STEP = 1.05;
 const W = Math.round((B.east - B.west) / STEP);
 const H = Math.round((B.north - B.south) / STEP);
 let d = "";

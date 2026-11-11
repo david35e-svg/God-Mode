@@ -1,30 +1,32 @@
 import Link from "next/link";
-import { PackOpener } from "@/components/PackOpener";
+import { ArrowLeft } from "lucide-react";
+import { Atlas } from "@/components/Atlas";
+import { SpotEntry } from "@/components/SpotEntry";
 import { Countdown } from "@/components/Countdown";
 import { Status } from "@/components/Status";
-import { DESTINATIONS, EVENTS } from "@/data/content";
+import { CHECKED_AT, EVENTS, SPOTS } from "@/data/content";
 import { SHELVES } from "@/data/partners";
 
 export default function Home() {
   const events = [...EVENTS].sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+  const featured = SPOTS.filter((s) => s.rarity >= 3).slice(0, 5);
   return (
     <>
-      <section className="arena">
-        <div className="arena-copy">
-          <h1 className="title-xl">פותחים<br />חבילה.</h1>
-          <p className="arena-sub">קלפי פוקימון, טורנירים ונסיעות גיימינג. הכול בעברית, ובלי מחירים מומצאים.</p>
-          <div className="actions">
-            <Link className="btn" href="/shop">לחנות הקלפים</Link>
-            <Link className="btn ghost" href="/events">מה בלוח</Link>
-          </div>
+      <Atlas />
+
+      <section className="wrap section" aria-labelledby="spots-h">
+        <div className="sec-head">
+          <h2 id="spots-h" className="title-l">מקומות נסתרים</h2>
+          <Link href="/spots">כל {SPOTS.length} המקומות <ArrowLeft aria-hidden size={16} /></Link>
         </div>
-        <PackOpener />
+        <p className="lead">ארקייד בקומה חמישית, בר שנראה רגיל מבחוץ, קניון שהקומות העליונות שלו הן מבוך של חנויות. לוחצים על שורה כדי לפתוח אותה.</p>
+        <div className="spots">{featured.map((s) => <SpotEntry key={s.id} spot={s} />)}</div>
       </section>
 
-      <section className="wrap section" aria-labelledby="sh">
+      <section className="wrap section" aria-labelledby="shop-h">
         <div className="sec-head">
-          <h2 id="sh" className="title-l">המדפים</h2>
-          <Link href="/shop">לכל החנות</Link>
+          <h2 id="shop-h" className="title-l">חנות הקלפים</h2>
+          <Link href="/shop">לכל המדפים <ArrowLeft aria-hidden size={16} /></Link>
         </div>
         <ul className="binder">
           {SHELVES.map((s) => (
@@ -33,34 +35,25 @@ export default function Home() {
         </ul>
       </section>
 
-      <section className="wrap section" aria-labelledby="ev">
+      <section className="wrap section" aria-labelledby="ev-h">
         <div className="sec-head">
-          <h2 id="ev" className="title-l">הלוח של 2027</h2>
-          <Link href="/events">לכל האירועים</Link>
+          <h2 id="ev-h" className="title-l">הלוח של 2027</h2>
+          <Link href="/events">כל האירועים <ArrowLeft aria-hidden size={16} /></Link>
         </div>
-        <ol className="bosses">
+        <p className="lead">נבדק ב-{CHECKED_AT}. ספירה לאחור מופיעה רק לתאריך שאימתנו מול מקור.</p>
+        <ol className="missions">
           {events.map((e) => (
             <li key={e.id}>
-              <Link href={`/events/${e.id}`} className="boss">
-                <span className="boss-name" dir="auto">{e.name}</span>
-                <span className="boss-date">{e.dateText}</span>
-                <span className="boss-meta">{e.status === "confirmed" ? <Countdown date={e.sortDate} /> : <Status status={e.status} />}</span>
+              <Link href={`/events/${e.id}`}>
+                <span className="m-clock">{e.status === "confirmed" ? <Countdown date={e.sortDate} /> : <Status status={e.status} />}</span>
+                <span className="m-main">
+                  <span className="m-name"><bdi>{e.name}</bdi></span>
+                  <span className="m-meta">{e.dateText} · {e.venue}</span>
+                </span>
               </Link>
             </li>
           ))}
         </ol>
-      </section>
-
-      <section className="wrap section" aria-labelledby="wo">
-        <div className="sec-head">
-          <h2 id="wo" className="title-l">בחירת עולם</h2>
-          <Link href="/destinations">למפה</Link>
-        </div>
-        <ul className="worlds">
-          {DESTINATIONS.map((d, i) => (
-            <li key={d.id}><Link href={`/destinations/${d.id}`} className="world"><span className="world-n">{i + 1}-1</span><b>{d.name}</b><span>{d.pitch}</span></Link></li>
-          ))}
-        </ul>
       </section>
     </>
   );
