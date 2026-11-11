@@ -1,6 +1,0 @@
-{
-  "name": "God Mode Traveler",
-  "description": "פלטפורמת תיירות הגיימינג והספורט האלקטרוני (eSports) המובילה בעולם לגיימרים",
-  "requestFramePermissions": ["camera", "microphone", "geolocation"],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
