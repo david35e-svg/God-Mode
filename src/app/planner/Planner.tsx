@@ -54,7 +54,7 @@ export function Planner() {
         </label>
       </form>
       <div aria-live="polite">
-        <h2 className="mid">{results.length ? "ההתאמות שלך" : "אין התאמה"}</h2>
+        <h2 className="title-m">{results.length ? "ההתאמות שלך" : "אין התאמה"}</h2>
         <ul className="stops">
           {results.map(({ d, events, fitsMonth, fitsDays }) => (
             <li key={d.id}>

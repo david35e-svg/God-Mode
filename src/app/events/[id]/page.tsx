@@ -20,7 +20,7 @@ export default async function Page({ params }: P) {
   return (
     <article className="wrap section guide">
       <div>
-        <h1 className="big" dir="auto">{e.name}</h1>
+        <h1 className="title-l" dir="auto">{e.name}</h1>
         <p className="lead">{e.about}</p>
         <p className="event-date">{e.dateText}</p>
         <p><Status status={e.status} /></p>

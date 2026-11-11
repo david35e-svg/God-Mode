@@ -15,9 +15,9 @@ export default async function Page({ params }: P) {
   const d = destination(g.destinationId);
   return (
     <article className="wrap section prose">
-      <h1 className="big">{g.title}</h1>
+      <h1 className="title-l">{g.title}</h1>
       <p className="lead">{g.lead}</p>
-      {g.sections.map((s) => <section key={s.h}><h2 className="mid">{s.h}</h2><p>{s.p}</p></section>)}
+      {g.sections.map((s) => <section key={s.h}><h2 className="title-m">{s.h}</h2><p>{s.p}</p></section>)}
       {d && <p><Link className="btn" href={`/destinations/${d.id}`}>המדריך של {d.name}</Link></p>}
     </article>
   );

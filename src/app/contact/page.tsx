@@ -23,7 +23,7 @@ export default function Page() {
   }
   return (
     <div className="wrap section narrow">
-      <h1 className="big">יצירת קשר</h1>
+      <h1 className="title-l">יצירת קשר</h1>
       {state === "sent"
         ? <p className="msg ok" role="status">ההודעה נשלחה. נחזור אליך לאימייל שכתבת.</p>
         : <form className="panel" onSubmit={submit}>

@@ -5,7 +5,7 @@
 // בלי ערך, הקישור מוביל לאתר רגיל, בלי עמלה ובלי תווית שותף.
 
 export type PartnerCategory = "hotels" | "flights" | "tours" | "cards";
-export type Ctx = { city: string; iata: string };
+export type Ctx = { city: string; iata: string; q?: string };
 export type Partner = {
   id: string; name: string; category: PartnerCategory; action: (c: Ctx) => string;
   target: (c: Ctx) => string; tracking?: string;
@@ -27,7 +27,7 @@ export const PARTNERS: Partner[] = [
   },
   {
     id: "tcgplayer", name: "TCGplayer", category: "cards", tracking: process.env.NEXT_PUBLIC_AFF_TCGPLAYER,
-    action: () => "קלפי מסחר", target: () => "https://www.tcgplayer.com",
+    action: () => "קלפי מסחר", target: (c) => c.q ? `https://www.tcgplayer.com/search/pokemon/product?q=${enc(c.q)}` : "https://www.tcgplayer.com/search/pokemon/product",
   },
   {
     id: "cardnexus", name: "CardNexus", category: "cards", tracking: process.env.NEXT_PUBLIC_AFF_CARDNEXUS,
@@ -43,3 +43,11 @@ export function partnerUrl(p: Partner, c: Ctx) {
   return { url: target + (target.includes("?") ? "&" : "?") + t.replace(/^[?&]/, ""), isAffiliate: true };
 }
 export const partnersIn = (cats: PartnerCategory[]) => PARTNERS.filter((p) => cats.includes(p.category));
+
+// מדפים בחנות: כל מדף הוא חיפוש אצל השותף
+export const SHELVES = [
+  { id: "boosters", title: "חבילות בוסטר", text: "חבילה סגורה, הפתעה בפנים. הדרך הקלאסית להתחיל.", q: "booster pack" },
+  { id: "boxes", title: "קופסאות ומארזים", text: "מארזים עם כמה חבילות ואביזרים, טובים גם כמתנה.", q: "elite trainer box" },
+  { id: "singles", title: "קלפים בודדים", text: "יודעים מה חסר לכם באוסף? קונים בדיוק את הקלף.", q: "" },
+  { id: "accessories", title: "שרוולים ותיקיות", text: "שומרים על הקלפים: שרוולים, טופ-לודרים ותיקיות.", q: "sleeves" },
+];

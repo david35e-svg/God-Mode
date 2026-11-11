@@ -73,8 +73,8 @@ export function WorldLevel() {
         </svg>
       </div>
       <div className="level-panel">
-        <h1 className="hero-title">לאן ממשיכים?</h1>
-        <p className="hero-sub">המדריך בעברית לגיימרים שיוצאים מישראל. בוחרים שלב, ורואים מה יש שם ומתי כדאי להגיע.</p>
+        <h1 className="title-xl">בחירת<br />עולם.</h1>
+        <p className="arena-sub">חמש ערים לגיימרים שיוצאים מישראל. בוחרים עולם ורואים מה יש שם ומתי כדאי להגיע.</p>
         <div role="radiogroup" aria-label="בחירת יעד" className="stages" onKeyDown={onKey}>
           {DESTINATIONS.map((d, i) => (
             <button key={d.id} ref={(el) => { buttons.current[i] = el; }} role="radio" aria-checked={i === sel} tabIndex={i === sel ? 0 : -1} onClick={() => setSel(i)} className="stage">

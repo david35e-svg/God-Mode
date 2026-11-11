@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { DESTINATIONS, INTEREST_LABEL } from "@/data/content";
+import { WorldLevel } from "@/components/WorldLevel";
 export const metadata: Metadata = { title: "יעדים" };
 export default function Page() {
   return (
+    <>
+    <WorldLevel />
     <div className="wrap section">
-      <h1 className="big">יעדים</h1>
-      <p className="lead">חמש ערים שבנויות לנסיעה סביב משחקים.</p>
+      <h2 className="title-l">כל העולמות</h2>
       <ul className="rows">
         {DESTINATIONS.map((d) => (
           <li key={d.id}>
@@ -19,5 +21,6 @@ export default function Page() {
         ))}
       </ul>
     </div>
+    </>
   );
 }

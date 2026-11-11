@@ -52,7 +52,7 @@ function SignIn() {
   }
   return (
     <>
-      <h1 className="big">{mode === "in" ? "התחברות" : "פתיחת חשבון"}</h1>
+      <h1 className="title-l">{mode === "in" ? "התחברות" : "פתיחת חשבון"}</h1>
       <p className="lead">חשבון נדרש רק לשמירת תוכניות ולפרסום בקהילה. כל השאר פתוח.</p>
       <button className="btn" onClick={google}>המשך עם Google</button>
       <form className="panel" onSubmit={submit}>
@@ -109,7 +109,7 @@ function Signed() {
   }
   return (
     <>
-      <h1 className="big">החשבון שלי</h1>
+      <h1 className="title-l">החשבון שלי</h1>
       <p className="lead">{user.displayName ? `${user.displayName}, ` : ""}<span dir="ltr">{user.email}</span></p>
       {!user.emailVerified && (
         <p className="panel">האימייל עדיין לא מאומת, ולכן אי אפשר לפרסם בקהילה. אחרי האישור טענו את העמוד מחדש. <button className="link" onClick={resend}>שליחה חוזרת של המייל</button></p>
@@ -118,7 +118,7 @@ function Signed() {
         {error && <p className="msg err" role="alert">{error}</p>}
         {note && <p className="msg ok" role="status">{note}</p>}
       </div>
-      <h2 className="mid">התוכניות שלי</h2>
+      <h2 className="title-m">התוכניות שלי</h2>
       {plans === null && <p>טוען…</p>}
       {plans?.length === 0 && !error && <p className="empty">עוד אין תוכניות שמורות. <Link href="/planner">לבונה הטיול</Link></p>}
       <ul className="posts">

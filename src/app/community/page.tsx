@@ -52,7 +52,7 @@ export default function Page() {
 
   return (
     <div className="wrap section narrow">
-      <h1 className="big">קהילה</h1>
+      <h1 className="title-l">קהילה</h1>
       <p className="lead">שואלים, מספרים ומחפשים שותפים לנסיעה. בלי לפרסם טלפון או כתובת.</p>
       {user?.emailVerified ? (
         <form className="panel" onSubmit={submit}>

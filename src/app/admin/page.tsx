@@ -35,18 +35,18 @@ export default function Page() {
   useEffect(() => { if (isAdmin) void load(); }, [isAdmin, load]);
 
   if (loading) return <div className="wrap section"><p>טוען…</p></div>;
-  if (!isAdmin) return <div className="wrap section"><h1 className="big">אין גישה</h1><p className="lead">העמוד הזה מיועד למנהל האתר. <Link href="/account">להתחברות</Link></p></div>;
+  if (!isAdmin) return <div className="wrap section"><h1 className="title-l">אין גישה</h1><p className="lead">העמוד הזה מיועד למנהל האתר. <Link href="/account">להתחברות</Link></p></div>;
 
   const act = async (fn: () => Promise<unknown>) => { setError(""); try { await fn(); await load(); } catch (e) { setError(errorText(e)); } };
   return (
     <div className="wrap section narrow">
-      <h1 className="big">ניהול</h1>
+      <h1 className="title-l">ניהול</h1>
       {error && <p className="msg err" role="alert">{error}</p>}
-      <h2 className="mid">לחיצות על שותפים</h2>
+      <h2 className="title-m">לחיצות על שותפים</h2>
       <p className="tags">1,000 הלחיצות האחרונות. העמלות עצמן מופיעות בלוח הבקרה של כל שותף.</p>
       {clicks?.length === 0 && <p className="empty">עוד אין לחיצות.</p>}
       {!!clicks?.length && <table className="clicks"><thead><tr><th>שותף</th><th>לחיצות</th></tr></thead><tbody>{clicks.map(([p, n]) => <tr key={p}><td>{p}</td><td>{n}</td></tr>)}</tbody></table>}
-      <h2 className="mid">פניות</h2>
+      <h2 className="title-m">פניות</h2>
       {inq?.length === 0 && <p className="empty">אין פניות.</p>}
       <ul className="posts">
         {inq?.map((q) => (
@@ -61,7 +61,7 @@ export default function Page() {
           </li>
         ))}
       </ul>
-      <h2 className="mid">דיווחים על פוסטים</h2>
+      <h2 className="title-m">דיווחים על פוסטים</h2>
       {rep?.length === 0 && <p className="empty">אין דיווחים.</p>}
       <ul className="posts">
         {rep?.map((r) => (

@@ -6,8 +6,8 @@ import { Menu, X } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
-  ["/destinations", "יעדים"], ["/events", "אירועים"], ["/parks", "פארקים"], ["/guides", "מדריכים"],
-  ["/planner", "בונה טיול"], ["/community", "קהילה"], ["/shop", "חנות"],
+  ["/shop", "חנות קלפים"], ["/events", "אירועים"], ["/destinations", "עולמות"], ["/parks", "פארקים"],
+  ["/guides", "מדריכים"], ["/planner", "בונה טיול"], ["/community", "קהילה"],
 ] as const;
 
 export function Header() {
@@ -18,7 +18,7 @@ export function Header() {
   const items = [...NAV, ...(isAdmin ? ([["/admin", "ניהול"]] as const) : [])];
   return (
     <header className="site-header">
-      <Link href="/" className="logo" dir="ltr" aria-label="God Mode Traveler, לדף הבית">GOD MODE<span> TRAVELER</span></Link>
+      <Link href="/" className="logo" dir="ltr" aria-label="God Mode Traveler, לדף הבית"><span className="logo-mark" aria-hidden />GOD MODE<span> TRAVELER</span></Link>
       <button className="nav-toggle" aria-expanded={open} aria-controls="nav" aria-label={open ? "סגירת התפריט" : "פתיחת התפריט"} onClick={() => setOpen(!open)}>
         {open ? <X aria-hidden /> : <Menu aria-hidden />}
       </button>

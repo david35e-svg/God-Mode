@@ -22,9 +22,9 @@ export default async function Page({ params }: P) {
       <RouteMap lat={d.lat} lon={d.lon} label={d.name} />
       <div className="wrap section guide">
         <div>
-          <h1 className="big">{d.name}</h1>
+          <h1 className="title-l">{d.name}</h1>
           <p className="lead">{d.about}</p>
-          <h2 className="mid">מה רואים</h2>
+          <h2 className="title-m">מה רואים</h2>
           <ul className="stops">
             {d.stops.map((s) => (
               <li key={s.name}>
@@ -36,7 +36,7 @@ export default async function Page({ params }: P) {
           </ul>
           {events.length > 0 && (
             <>
-              <h2 className="mid">אירועים בלוח</h2>
+              <h2 className="title-m">אירועים בלוח</h2>
               <ul className="plain">
                 {events.map((e) => <li key={e.id}><Link href={`/events/${e.id}`}>{e.name}</Link>: {e.dateText} <Status status={e.status} /></li>)}
               </ul>

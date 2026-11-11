@@ -36,9 +36,9 @@ export default async function Page({ params }: P) {
   if (!d) notFound();
   return (
     <article className="wrap section prose">
-      <h1 className="big">{d.title}</h1>
+      <h1 className="title-l">{d.title}</h1>
       <p className="draft">טיוטה שממתינה לבדיקת עורך דין.</p>
-      {d.body.map(([h, p]) => <section key={h}><h2 className="mid">{h}</h2><p>{p}</p></section>)}
+      {d.body.map(([h, p]) => <section key={h}><h2 className="title-m">{h}</h2><p>{p}</p></section>)}
     </article>
   );
 }

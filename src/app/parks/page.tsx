@@ -6,12 +6,12 @@ export const metadata: Metadata = { title: "פארקים" };
 export default function Page() {
   return (
     <div className="wrap section">
-      <h1 className="big">פארקים</h1>
+      <h1 className="title-l">פארקים</h1>
       <p className="lead">שעות ומחירים משתנים לפי עונה, אז אנחנו שולחים אתכם לאתר הרשמי לבדוק.</p>
       <ul className="stops wide">
         {PARKS.map((p) => (
           <li key={p.id}>
-            <h2 className="mid" dir="auto">{p.name}</h2>
+            <h2 className="title-m" dir="auto">{p.name}</h2>
             <p className="tags">{p.place}</p>
             <p>{p.text}</p>
             <p className="link-row">

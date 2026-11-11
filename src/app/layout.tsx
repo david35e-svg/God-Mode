@@ -17,17 +17,19 @@ const body = localFont({
 const display = localFont({
   variable: "--font-display", display: "swap",
   src: [
-    { path: "./fonts/karantina-hebrew-700-normal.woff2", weight: "700" },
-    { path: "./fonts/karantina-latin-700-normal.woff2", weight: "700" },
+    { path: "./fonts/rubik-hebrew-900-normal.woff2", weight: "900" },
+    { path: "./fonts/rubik-latin-900-normal.woff2", weight: "900" },
+    { path: "./fonts/rubik-hebrew-700-normal.woff2", weight: "700" },
+    { path: "./fonts/rubik-latin-700-normal.woff2", weight: "700" },
   ],
 });
 
 export const metadata: Metadata = {
   title: { default: "God Mode Traveler", template: "%s | God Mode Traveler" },
-  description: "מדריך בעברית לגיימרים שיוצאים מישראל: תערוכות, טורנירים, פארקים וארקיידים.",
+  description: "קלפי פוקימון, טורנירים ונסיעות גיימינג, בעברית.",
   robots: { index: false, follow: false },
 };
-export const viewport: Viewport = { themeColor: "#1F3FE0" };
+export const viewport: Viewport = { themeColor: "#0E0726" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
