@@ -4,6 +4,10 @@ import "./globals.css";
 import { AuthProvider } from "@/lib/auth";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { A11yMenu } from "@/components/A11yMenu";
+import { CookieNotice } from "@/components/CookieNotice";
+import { InstallApp } from "@/components/InstallApp";
+import { SITE_DESC, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const body = localFont({
   variable: "--font-body", display: "swap",
@@ -29,9 +33,18 @@ const mono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: { default: "God Mode Traveler", template: "%s | God Mode Traveler" },
-  description: "מקומות גיימינג נסתרים בעולם, חנות קלפים וטורנירים. בעברית.",
+  metadataBase: new URL(SITE_URL),
+  title: { default: SITE_NAME, template: `%s | ${SITE_NAME}` },
+  description: SITE_DESC,
   robots: { index: false, follow: false },
+  openGraph: {
+    type: "website", locale: "he_IL", siteName: SITE_NAME,
+    title: SITE_NAME, description: SITE_DESC, url: SITE_URL,
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "God Mode Traveler: מקומות גיימינג נסתרים בעולם" }],
+  },
+  twitter: { card: "summary_large_image", title: SITE_NAME, description: SITE_DESC, images: ["/og.png"] },
+  icons: { icon: "/icon.svg", apple: "/icon-192.png" },
+  appleWebApp: { capable: true, title: "God Mode", statusBarStyle: "black-translucent" },
 };
 export const viewport: Viewport = { themeColor: "#060911" };
 
@@ -44,6 +57,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <main id="main">{children}</main>
           <Footer />
+          <A11yMenu />
+          <CookieNotice />
+          <InstallApp />
         </AuthProvider>
       </body>
     </html>

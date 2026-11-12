@@ -4,12 +4,17 @@ import { KIND_LABEL, destination, type Spot } from "@/data/content";
 import { Rarity } from "./Rarity";
 
 const ICON = { arcade: Joystick, bar: Beer, retro: Gamepad2, museum: Landmark, pcbang: Monitor, park: FerrisWheel };
+// צבע לכל סוג מקום, כדי שאפשר יהיה לזהות אותו במבט
+const KIND_COLOR: Record<string, string> = {
+  arcade: "#FF3D7A", bar: "#FFD233", retro: "#00E0A4",
+  museum: "#B07CFF", pcbang: "#5B8CFF", park: "#FF8A1F",
+};
 
 export function SpotEntry({ spot, showCity = true }: { spot: Spot; showCity?: boolean }) {
   const Icon = ICON[spot.kind];
   const d = destination(spot.destinationId);
   return (
-    <details className="spot" name="spot">
+    <details className="spot" name="spot" style={{ ["--k" as string]: KIND_COLOR[spot.kind] }}>
       <summary>
         <span className="spot-icon" aria-hidden><Icon size={20} /></span>
         <span className="spot-head">

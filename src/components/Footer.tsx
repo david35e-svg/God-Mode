@@ -10,6 +10,7 @@ export function Footer() {
           <Link href="/legal/terms">תנאי שימוש</Link>
           <Link href="/legal/privacy">פרטיות</Link>
           <Link href="/legal/accessibility">נגישות</Link>
+          <Link href="/legal/cookies">קוקיז</Link>
           <Link href="/legal/affiliate">גילוי שותפים</Link>
           <Link href="/contact">יצירת קשר</Link>
         </nav>

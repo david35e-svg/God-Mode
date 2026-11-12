@@ -22,7 +22,7 @@ export default async function Page({ params }: P) {
   const events = eventsFor(d.id);
   const spots = spotsFor(d.id);
   return (
-    <article>
+    <article style={{ ["--accent" as string]: d.accent }}>
       <RouteMap lat={d.lat} lon={d.lon} label={d.name} />
       <div className="wrap">
         <header className="dest-head">

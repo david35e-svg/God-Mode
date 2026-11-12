@@ -13,8 +13,17 @@ export function arc(a: Pt, b: Pt) {
   return `M${a.x.toFixed(1)} ${a.y.toFixed(1)}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`;
 }
 
-/** מסגרת שמכילה את שתי הנקודות ואת קשת הטיסה שביניהן */
-export function frame(a: Pt, b: Pt, aspect: number, pad = 12) {
+/**
+ * מסגרת שמכילה את שתי הנקודות ואת קשת הטיסה שביניהן.
+ * visible הוא החלק מרוחב המסך שבו המפה באמת נראית, והשאר מוסתר מאחורי הפאנל.
+ */
+export function frame(a: Pt, b: Pt, aspect: number, pad = 12, visible = 1) {
+  const v = Math.min(1, Math.max(0.2, visible));
+  const f = box(a, b, aspect * v, pad);
+  return `${f.x.toFixed(1)} ${f.y.toFixed(1)} ${(f.w / v).toFixed(1)} ${f.h.toFixed(1)}`;
+}
+
+function box(a: Pt, b: Pt, aspect: number, pad: number) {
   const minW = 70;
   let w = Math.max(Math.abs(a.x - b.x) + pad * 2, minW);
   let h = w / aspect;
@@ -22,7 +31,7 @@ export function frame(a: Pt, b: Pt, aspect: number, pad = 12) {
   if (h < needH) { h = needH; w = h * aspect; }
   const x = (a.x + b.x) / 2 - w / 2;
   const y = (a.y + b.y) / 2 - h / 2 - Math.abs(a.x - b.x) * 0.07;
-  return `${x.toFixed(1)} ${y.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`;
+  return { x, y, w, h };
 }
 
 const rad = (d: number) => (d * Math.PI) / 180;

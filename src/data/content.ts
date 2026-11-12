@@ -11,7 +11,7 @@ export const INTEREST_LABEL: Record<Interest, string> = {
 
 export type Destination = {
   id: string; name: string; nameEn: string; iata: string; country: string; flag: string;
-  lat: number; lon: number;
+  lat: number; lon: number; accent: string;
   pitch: string; about: string; interests: Interest[];
   bestMonths: number[]; bestText: string; minDays: number; tip: string;
 };
@@ -20,7 +20,7 @@ export const ORIGIN = { name: "תל אביב", iata: "TLV", lat: 32.01, lon: 34.
 
 export const DESTINATIONS: Destination[] = [
   {
-    id: "tokyo", name: "טוקיו", nameEn: "Tokyo", iata: "tyo", country: "יפן", flag: "🇯🇵",
+    id: "tokyo", accent: "#FF3D7A", name: "טוקיו", nameEn: "Tokyo", iata: "tyo", country: "יפן", flag: "🇯🇵",
     lat: 35.68, lon: 139.77,
     pitch: "ארקיידים רבי קומות, חנויות רטרו ורובע שלם של משחקים.",
     about: "אקיהברה היא נקודת ההתחלה: חנויות משחקים ישנים, ארקיידים ומכונות קלפים ברדיוס הליכה. כשנמאס מהעומס שם, נוסעים לנקאנו, שבה אותו עולם בשקט ולעיתים בזול יותר.",
@@ -29,7 +29,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "הרבה ארקיידים עובדים במזומן ובמטבעות של 100 ין. כדאי להחזיק מטבעות בכיס.",
   },
   {
-    id: "osaka", name: "אוסקה", nameEn: "Osaka", iata: "osa", country: "יפן", flag: "🇯🇵",
+    id: "osaka", accent: "#FF8A1F", name: "אוסקה", nameEn: "Osaka", iata: "osa", country: "יפן", flag: "🇯🇵",
     lat: 34.69, lon: 135.5,
     pitch: "Super Nintendo World הראשון בעולם, ורובע רטרו שפחות תיירים מכירים.",
     about: "אוסקה משתלבת טוב עם נסיעה לטוקיו. יום אחד לפארק, ועוד יום ב-Den Den Town שבנמבה, רובע האלקטרוניקה והרטרו של העיר.",
@@ -38,7 +38,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "בעונה עמוסה הכניסה לאזור נינטנדו מוגבלת. בודקים באתר הפארק מראש איך מבטיחים כניסה.",
   },
   {
-    id: "seoul", name: "סיאול", nameEn: "Seoul", iata: "sel", country: "דרום קוריאה", flag: "🇰🇷",
+    id: "seoul", accent: "#5B8CFF", name: "סיאול", nameEn: "Seoul", iata: "sel", country: "דרום קוריאה", flag: "🇰🇷",
     lat: 37.57, lon: 126.98,
     pitch: "הבית של הליגה הקוריאנית, ו-PC Bang בכל פינה.",
     about: "כאן ספורט אלקטרוני הוא חלק מהחיים בעיר. משחק של LCK באולם, וערב ב-PC Bang שבו מזמינים אוכל ישירות לעמדה.",
@@ -47,7 +47,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "בחלק מה-PC Bang הרישום מיועד לתושבים. אומרים בדלפק שאתם תיירים, ולרוב יפתחו לכם עמדת אורח.",
   },
   {
-    id: "cologne", name: "קלן", nameEn: "Cologne", iata: "cgn", country: "גרמניה", flag: "🇩🇪",
+    id: "cologne", accent: "#FFD233", name: "קלן", nameEn: "Cologne", iata: "cgn", country: "גרמניה", flag: "🇩🇪",
     lat: 50.94, lon: 6.96,
     pitch: "אוגוסט אחד, שני אירועים גדולים: gamescom ו-IEM Cologne.",
     about: "ב-2027 שני האירועים נופלים באותו חודש, בהפרש של כשבוע. אפשר נסיעה אחת ארוכה, או לבחור אחד מהם ולהזמין לינה מוקדם.",
@@ -56,7 +56,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "לינה בקלן מתמלאת מוקדם בשבוע של gamescom. גם ערים סמוכות עם רכבת ישירה הן אפשרות.",
   },
   {
-    id: "berlin", name: "ברלין", nameEn: "Berlin", iata: "ber", country: "גרמניה", flag: "🇩🇪",
+    id: "berlin", accent: "#B07CFF", name: "ברלין", nameEn: "Berlin", iata: "ber", country: "גרמניה", flag: "🇩🇪",
     lat: 52.52, lon: 13.4,
     pitch: "מוזיאון משחקי המחשב, ברי גיימינג ומרחב ניסיוני.",
     about: "ברלין היא התחנה של מי שרוצה להבין מאיפה הכול הגיע. מוזיאון גדול להיסטוריה של המשחקים, ולצידו ברים ששמים ספורט אלקטרוני על המסך. משתלבת טוב עם קלן באותה נסיעה.",
@@ -65,7 +65,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "המרחקים בברלין גדולים. כרטיס יומי לתחבורה הציבורית חוסך זמן וכסף.",
   },
   {
-    id: "amsterdam", name: "אמסטרדם", nameEn: "Amsterdam", iata: "ams", country: "הולנד", flag: "🇳🇱",
+    id: "amsterdam", accent: "#00E0A4", name: "אמסטרדם", nameEn: "Amsterdam", iata: "ams", country: "הולנד", flag: "🇳🇱",
     lat: 52.37, lon: 4.9,
     pitch: "ארקייד שמשלמים בו כניסה אחת, ובר משחקים למבוגרים.",
     about: "הטיסה הקצרה מכל היעדים כאן, ולכן מתאימה גם לסוף שבוע. ארקייד גדול שבו משלמים פעם אחת ומשחקים בלי מטבעות, וברים שהמשחקים בהם הם הסיבה להגיע.",
@@ -74,7 +74,7 @@ export const DESTINATIONS: Destination[] = [
     tip: "חלק ממקומות המשחק הם לגיל 18 ומעלה ופתוחים בעיקר בערב. בודקים שעות לפני שיוצאים.",
   },
   {
-    id: "los-angeles", name: "לוס אנג'לס", nameEn: "Los Angeles", iata: "lax", country: "ארצות הברית", flag: "🇺🇸",
+    id: "los-angeles", accent: "#FF5CE1", name: "לוס אנג'לס", nameEn: "Los Angeles", iata: "lax", country: "ארצות הברית", flag: "🇺🇸",
     lat: 34.05, lon: -118.24,
     pitch: "Super Nintendo World בהוליווד, וברי ארקייד בערב.",
     about: "הנסיעה הארוכה מכולן, ומתאימה למי שמשלב כמה דברים: הפארק, העיר, וברים שבהם המכונות הן האטרקציה.",

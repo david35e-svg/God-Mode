@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { LAND_PATH } from "@/data/world";
 import { DESTINATIONS, ORIGIN, spotsFor, eventsFor } from "@/data/content";
 import { arc, distanceKm, frame, project } from "@/lib/geo";
+import { useCountUp } from "@/lib/useCountUp";
 
 gsap.registerPlugin(useGSAP);
 const home = project(ORIGIN.lat, ORIGIN.lon);
@@ -14,6 +15,7 @@ const viewWidth = (v: string) => Number(v.split(" ")[2]);
 export function Atlas() {
   const [sel, setSel] = useState(0);
   const [aspect, setAspect] = useState(1.6);
+  const [visible, setVisible] = useState(1);
   const root = useRef<HTMLDivElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const route = useRef<SVGPathElement>(null);
@@ -23,12 +25,12 @@ export function Atlas() {
 
   const dest = DESTINATIONS[sel];
   const to = project(dest.lat, dest.lon);
-  const view = frame(home, to, aspect, 18);
+  const view = frame(home, to, aspect, 18, visible);
   // הסימונים נמדדים ביחידות המפה, ולכן גדלם נגזר מרוחב התצוגה הנוכחי
   const u = viewWidth(view) / 150;
-  const km = distanceKm(ORIGIN, dest);
-  const spots = spotsFor(dest.id).length;
-  const events = eventsFor(dest.id).length;
+  const km = useCountUp(distanceKm(ORIGIN, dest));
+  const spots = useCountUp(spotsFor(dest.id).length, 600);
+  const events = useCountUp(eventsFor(dest.id).length, 600);
 
   useEffect(() => {
     const el = svg.current;
@@ -36,6 +38,8 @@ export function Atlas() {
     const measure = () => {
       const b = el.getBoundingClientRect();
       if (b.width && b.height) setAspect(b.width / b.height);
+      // מעל 900 פיקסלים הפאנל מכסה את צד המפה, אז ממסגרים רק לחלק הגלוי
+      setVisible(window.innerWidth > 900 ? 0.56 : 1);
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -91,13 +95,14 @@ export function Atlas() {
   };
 
   return (
-    <section className="atlas" ref={root} aria-labelledby="atlas-h">
+    <section className="atlas" ref={root} aria-labelledby="atlas-h" style={{ ["--accent" as string]: dest.accent }}>
       <svg ref={svg} viewBox={view} preserveAspectRatio="xMidYMid slice" className="atlas-map" aria-hidden focusable="false">
         <defs>
           <radialGradient id="glow"><stop offset="0" stopColor="currentColor" stopOpacity=".55" /><stop offset="1" stopColor="currentColor" stopOpacity="0" /></radialGradient>
         </defs>
         <path className="atlas-land" d={LAND_PATH} shapeRendering="crispEdges" />
         <path ref={route} className="atlas-route" d={arc(home, to)} style={{ strokeWidth: 0.34 * u }} />
+        <path className="atlas-flow" d={arc(home, to)} style={{ strokeWidth: 0.7 * u, strokeDasharray: `${0.5 * u} ${6 * u}` }} />
         <g className="city home">
           <circle cx={home.x} cy={home.y} r={3.4 * u} className="halo" />
           <rect x={home.x - 0.75 * u} y={home.y - 0.75 * u} width={1.5 * u} height={1.5 * u} />
@@ -105,8 +110,10 @@ export function Atlas() {
         {DESTINATIONS.map((d, i) => {
           const p = project(d.lat, d.lon);
           return (
-            <g key={d.id} className={`city${i === sel ? " on" : ""}`} onClick={() => setSel(i)}>
+            <g key={d.id} className={`city${i === sel ? " on" : ""}`} onClick={() => setSel(i)}
+              style={{ ["--c" as string]: d.accent, ["--d" as string]: `${i * 0.7}s` }}>
               <circle cx={p.x} cy={p.y} r={3.8 * u} className="halo" />
+              {i === sel && <circle cx={p.x} cy={p.y} r={2.4 * u} className="pulse" style={{ strokeWidth: 0.4 * u }} />}
               <rect x={p.x - 0.85 * u} y={p.y - 0.85 * u} width={1.7 * u} height={1.7 * u} />
             </g>
           );
