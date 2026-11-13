@@ -39,7 +39,7 @@ export function Atlas() {
       const b = el.getBoundingClientRect();
       if (b.width && b.height) setAspect(b.width / b.height);
       // מעל 900 פיקסלים הפאנל מכסה את צד המפה, אז ממסגרים רק לחלק הגלוי
-      setVisible(window.innerWidth > 900 ? 0.56 : 1);
+      setVisible(window.innerWidth > 900 ? 0.47 : 1);
     };
     measure();
     const ro = new ResizeObserver(measure);
@@ -83,7 +83,7 @@ export function Atlas() {
       .to(t, { v: 1, duration: 1.2, ease: "power2.inOut", onUpdate: () => place(t.v) }, "<")
       .fromTo(plane.current, { opacity: 0 }, { opacity: 1, duration: 0.25 }, "<")
       .to(plane.current, { opacity: 0, duration: 0.3 }, "-=0.3");
-  }, { dependencies: [sel], scope: root, revertOnUpdate: false });
+  }, { dependencies: [sel, view], scope: root, revertOnUpdate: false });
 
   const onKey = (e: KeyboardEvent) => {
     const step = { ArrowLeft: 1, ArrowDown: 1, ArrowRight: -1, ArrowUp: -1 }[e.key];
@@ -124,32 +124,31 @@ export function Atlas() {
       </svg>
 
       <div className="atlas-hud">
+        <p className="kicker"><span />בחירת יעד</p>
         <h1 id="atlas-h" className="title-xl">המקומות<br />שלא כתובים<br />במדריך.</h1>
-        <p className="atlas-lead">
-          ארקייד בקומה חמישית, בר שנראה רגיל מבחוץ, קניון שהקומות העליונות שלו הן מבוך של חנויות.
-          בוחרים יעד, ונדליק את המסלול.
-        </p>
 
-        <div className="chips" role="radiogroup" aria-label="בחירת יעד" onKeyDown={onKey}>
+        <div className="menu" role="radiogroup" aria-label="בחירת יעד" onKeyDown={onKey}>
           {DESTINATIONS.map((d, i) => (
-            <button key={d.id} ref={(el) => { chips.current[i] = el; }} className="chip" role="radio"
-              aria-checked={i === sel} tabIndex={i === sel ? 0 : -1} onClick={() => setSel(i)}>
-              {d.name}
+            <button key={d.id} ref={(el) => { chips.current[i] = el; }} className="menu-item" role="radio"
+              aria-checked={i === sel} tabIndex={i === sel ? 0 : -1} onClick={() => setSel(i)}
+              style={{ ["--c" as string]: d.accent }}>
+              <span className="mi-n num">{String(i + 1).padStart(2, "0")}</span>
+              <span className="mi-name">{d.name}</span>
+              <span className="mi-country">{d.country}</span>
             </button>
           ))}
         </div>
 
         <div className="readout" aria-live="polite">
-          <h2>{dest.name}<span>{dest.country}</span></h2>
-          <p>{dest.pitch}</p>
+          <p className="readout-pitch">{dest.pitch}</p>
           <dl className="gauges">
-            <div><dt>מרחק מתל אביב</dt><dd className="num">{km.toLocaleString("en-US")} ק״מ</dd></div>
-            <div><dt>מקומות נסתרים</dt><dd className="num">{spots}</dd></div>
-            <div><dt>אירועים בלוח</dt><dd className="num">{events}</dd></div>
+            <div><dt>מרחק</dt><dd className="num">{km.toLocaleString("en-US")}<small>ק״מ</small></dd></div>
+            <div><dt>מקומות</dt><dd className="num">{String(spots).padStart(2, "0")}</dd></div>
+            <div><dt>אירועים</dt><dd className="num">{String(events).padStart(2, "0")}</dd></div>
           </dl>
           <div className="actions">
             <Link className="btn" href={`/destinations/${dest.id}`}>כניסה ל{dest.name}</Link>
-            <Link className="btn ghost" href="/spots">כל המקומות הנסתרים</Link>
+            <Link className="btn ghost" href="/spots">כל המקומות</Link>
           </div>
         </div>
       </div>

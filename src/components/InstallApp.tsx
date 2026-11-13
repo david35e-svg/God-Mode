@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Download, Share, X } from "lucide-react";
+import { readConsent } from "@/lib/prefs";
 
 type Prompt = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 const DISMISSED = "gmt.install.dismissed";
@@ -19,7 +20,8 @@ export function InstallApp() {
       || (navigator as { standalone?: boolean }).standalone === true;
     let dismissed = false;
     try { dismissed = localStorage.getItem(DISMISSED) === "1"; } catch { /* גלישה פרטית */ }
-    if (standalone || dismissed) return;
+    // לא מציגים שתי הודעות בתחתית המסך יחד
+    if (standalone || dismissed || !readConsent()) return;
 
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
     setIos(isIos);

@@ -5,6 +5,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, limit, orderBy, query, ser
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth";
 import { errorText } from "@/lib/errors";
+import { withTimeout } from "@/lib/withTimeout";
 
 type Post = { id: string; uid: string; authorName: string; title: string; body: string; createdAt?: Timestamp };
 
@@ -30,10 +31,10 @@ export default function Page() {
     const f = new FormData(form);
     setBusy(true); setError(""); setNote("");
     try {
-      await addDoc(collection(db(), "posts"), {
+      await withTimeout(addDoc(collection(db(), "posts"), {
         uid: user.uid, authorName: (user.displayName || "גיימר/ית").slice(0, 60),
         title: String(f.get("title")).trim(), body: String(f.get("body")).trim(), createdAt: serverTimestamp(),
-      });
+      }));
       form.reset(); setNote("הפוסט פורסם."); await load();
     } catch (err) { setError(errorText(err)); }
     setBusy(false);

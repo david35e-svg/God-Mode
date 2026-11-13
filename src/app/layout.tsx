@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { A11yMenu } from "@/components/A11yMenu";
 import { CookieNotice } from "@/components/CookieNotice";
 import { InstallApp } from "@/components/InstallApp";
+import { Hud } from "@/components/Hud";
 import { SITE_DESC, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const body = localFont({
@@ -53,6 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="he" dir="rtl" className={`${body.variable} ${display.variable} ${mono.variable}`}>
       <body>
         <a className="skip" href="#main">דילוג לתוכן</a>
+        <Hud />
         <AuthProvider>
           <Header />
           <main id="main">{children}</main>

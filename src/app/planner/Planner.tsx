@@ -6,6 +6,7 @@ import { DESTINATIONS, EVENTS, INTEREST_LABEL, type Interest } from "@/data/cont
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/lib/auth";
 import { errorText } from "@/lib/errors";
+import { withTimeout } from "@/lib/withTimeout";
 
 const MONTHS = ["ינואר","פברואר","מרץ","אפריל","מאי","יוני","יולי","אוגוסט","ספטמבר","אוקטובר","נובמבר","דצמבר"];
 
@@ -30,7 +31,7 @@ export function Planner() {
     if (!user) return;
     setSaving(true); setNote(null);
     try {
-      await addDoc(collection(db(), "plans"), { uid: user.uid, interest, month, days, destinationIds: results.map((r) => r.d.id), createdAt: serverTimestamp() });
+      await withTimeout(addDoc(collection(db(), "plans"), { uid: user.uid, interest, month, days, destinationIds: results.map((r) => r.d.id), createdAt: serverTimestamp() }));
       setNote({ ok: true, text: "התוכנית נשמרה בחשבון שלך." });
     } catch (e) { setNote({ ok: false, text: errorText(e) }); }
     setSaving(false);

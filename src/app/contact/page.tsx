@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { errorText } from "@/lib/errors";
+import { withTimeout } from "@/lib/withTimeout";
 
 export default function Page() {
   const [state, setState] = useState<"idle" | "sending" | "sent">("idle");
@@ -14,10 +15,10 @@ export default function Page() {
     if (f.get("website")) return;
     setState("sending"); setError("");
     try {
-      await addDoc(collection(db(), "inquiries"), {
+      await withTimeout(addDoc(collection(db(), "inquiries"), {
         name: String(f.get("name")).trim(), email: String(f.get("email")).trim(), message: String(f.get("message")).trim(),
         consent: f.get("consent") === "on", handled: false, createdAt: serverTimestamp(),
-      });
+      }));
       setState("sent");
     } catch (err) { setError(errorText(err)); setState("idle"); }
   }
